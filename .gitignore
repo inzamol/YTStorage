@@ -1,0 +1,6 @@
+venv
+*.pyc
+.env
+credentials.json
+token.pickle
+.env
