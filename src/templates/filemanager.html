@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Manager</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        .upload-section {
+            margin-bottom: 20px;
+            padding: 20px;
+            border: 2px dashed #ccc;
+            border-radius: 4px;
+            text-align: center;
+        }
+
+        .file-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .file-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .file-item:last-child {
+            border-bottom: none;
+        }
+
+        button {
+            padding: 8px 16px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>YouTube Video Manager</h1>
+        <p>Successfully authenticated with YouTube!</p>
+
+        <div class="upload-section">
+            <h3>Upload New Video</h3>
+            <form action="/upload" method="post" enctype="multipart/form-data">
+                <input type="file" name="file" accept="video/*" required>
+                <input type="text" name="title" placeholder="Video Title" required>
+                <input type="text" name="description" placeholder="Description">
+                <button type="submit">Upload to YouTube</button>
+            </form>
+        </div>
+
+        <div class="file-manager">
+            <h3>Your Upload Jobs</h3>
+            <ul class="file-list">
+                {% if jobs %}
+                {% for job in jobs %}
+                <li class="file-item">
+                    <div>
+                        <strong>{{ job.title }}</strong>
+                        <span style="color: gray; font-size: 0.9em;">({{ job.status }})</span>
+                        {% if job.error_message %}
+                        <div style="color: red; font-size: 0.8em;">Error: {{ job.error_message }}</div>
+                        {% endif %}
+                    </div>
+                </li>
+                {% endfor %}
+                {% else %}
+                <li class="file-item">No uploads found.</li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</body>
+
+</html>

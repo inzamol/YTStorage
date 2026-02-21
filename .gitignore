@@ -4,3 +4,6 @@ venv
 credentials.json
 token.pickle
 .env
+*.db
+temp_videos
+alembic/versions/*
