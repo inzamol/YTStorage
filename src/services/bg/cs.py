@@ -1,9 +1,12 @@
 from celery import Celery
+from src.core.config import get_settings
+
+settings = get_settings()
 
 celery = Celery(
     "yt_tasks",
-    broker="redis://localhost:6379/0",
-    backend="redis://localhost:6379/1"
+    broker=settings.REDIS_URL,
+    backend=settings.REDIS_URL
 )
 
 # celery.conf.task_always_eager = True

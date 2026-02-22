@@ -1,6 +1,7 @@
 from fastapi import FastAPI, Request
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
+from fastapi.middleware.cors import CORSMiddleware
 from starlette.exceptions import HTTPException as StarletteHTTPException
 from pathlib import Path
 
@@ -13,6 +14,14 @@ from src.api.routers import auth, dashboard, video
 
 settings = get_settings()
 app = FastAPI(title=settings.PROJECT_NAME)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"], # For production, you may want to restrict this
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 base_dir = Path(__file__).resolve().parent
 templates = Jinja2Templates(directory=str(base_dir / "templates"))
@@ -43,7 +52,3 @@ async def http_exception_handler(request: Request, exc: StarletteHTTPException):
 app.include_router(dashboard.router)
 app.include_router(auth.router)
 app.include_router(video.router)
-
-if __name__ == "__main__":
-    import uvicorn
-    uvicorn.run("src.main:app", host="0.0.0.0", port=8000, reload=True)

@@ -1,0 +1,46 @@
+version: '3.8'
+
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    # Use uvicorn with --reload for development
+    command: uvicorn src.main:app --host 0.0.0.0 --port 8000 --reload
+    volumes:
+      # Mount the current directory so code changes reflect immediately
+      - .:/app
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    environment:
+      - REDIS_URL=redis://redis:6379/0
+      - DATABASE_URL=sqlite:///./ytmanager.db
+      - ENVIRONMENT=development
+    depends_on:
+      - redis
+
+  worker:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    # Run Celery worker normally. (Celery does not have a native robust --reload)
+    # Since volume is mapped, you can restart this container if task code changes.
+    command: celery -A src.services.bg.tasks worker --loglevel=info
+    volumes:
+      - .:/app
+    env_file:
+      - .env
+    environment:
+      - REDIS_URL=redis://redis:6379/0
+      - DATABASE_URL=sqlite:///./ytmanager.db
+      - ENVIRONMENT=development
+    depends_on:
+      - redis
+      - web
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"

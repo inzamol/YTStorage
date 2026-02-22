@@ -5,6 +5,7 @@ class Settings(BaseSettings):
     GOOGLE_CLIENT_ID: str
     GOOGLE_CLIENT_SECRET: str
     DATABASE_URL: str = "sqlite:///./ytmanager.db"
+    REDIS_URL: str = "redis://localhost:6379/0"
     
     # YouTube API Scopes
     YOUTUBE_SCOPES: list[str] = ["https://www.googleapis.com/auth/youtube"]
