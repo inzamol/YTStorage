@@ -16,7 +16,15 @@ def process_upload(self, job_id: str):
         db.commit()
 
         us = UploadService()
-        video_id = us.upload_video(job.youtube_account.refresh_token, job.file_path, job.title, job.description, job.category_id, job.privacy_status)
+        video_id = us.upload_video(
+            refresh_token=job.youtube_account.refresh_token, 
+            file_path=job.file_path, 
+            file_name=job.title, 
+            description=job.description, 
+            category_id=job.category_id, 
+            privacy_status=job.privacy_status,
+            mime_type=job.mime_type
+        )
 
         job.status = "uploaded"
         job.video_id = video_id

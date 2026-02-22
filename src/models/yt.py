@@ -51,6 +51,7 @@ class VideoUploadJob(Base):
     privacy_status = Column(String(20), default="unlisted")
 
     file_path = Column(Text, nullable=False)
+    mime_type = Column(String(100), default="application/octet-stream")
 
     status = Column(Enum(UploadStatus), default=UploadStatus.pending)
     error_message = Column(Text)

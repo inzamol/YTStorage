@@ -1,23 +1,22 @@
 from google.oauth2.credentials import Credentials
 from googleapiclient.discovery import build
 from googleapiclient.http import MediaFileUpload
-from dotenv import load_dotenv, find_dotenv
 from src.services.file_service import FileService
-import os
+from src.core.config import get_settings
 
-load_dotenv(find_dotenv())
+settings = get_settings()
 
 
 class UploadService(FileService):
     def __init__(self):
         pass
-    def upload_video(self, refresh_token, file_path, file_name, description, category_id, privacy_status):
+    def upload_video(self, refresh_token, file_path, file_name, description, category_id, privacy_status, mime_type="application/octet-stream"):
         creds = Credentials(
             None,
             refresh_token=refresh_token,
             token_uri="https://oauth2.googleapis.com/token",
-            client_id=os.getenv("GOOGLE_CLIENT_ID"),
-            client_secret=os.getenv("GOOGLE_CLIENT_SECRET")
+            client_id=settings.GOOGLE_CLIENT_ID,
+            client_secret=settings.GOOGLE_CLIENT_SECRET
         )
 
         youtube = build("youtube", "v3", credentials=creds, cache_discovery=False)
@@ -32,7 +31,7 @@ class UploadService(FileService):
                 },
                 "status": {"privacyStatus": privacy_status}
             },
-            media_body=MediaFileUpload(file_path)
+            media_body=MediaFileUpload(file_path, mimetype=mime_type, resumable=True)
         )
 
         response = request.execute()
