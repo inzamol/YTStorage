@@ -48,7 +48,7 @@ class VideoUploadJob(Base):
     description = Column(Text)
     tags = Column(Text) # Store as JSON string in SQLite
     category_id = Column(String(20))
-    privacy_status = Column(String(20), default="private")
+    privacy_status = Column(String(20), default="unlisted")
 
     file_path = Column(Text, nullable=False)
 

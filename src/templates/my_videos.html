@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YT Manager - My Drive</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
+</head>
+
+<body class="bg-white text-slate-800 h-screen flex overflow-hidden">
+
+    <!-- Sidebar -->
+    <aside class="w-64 bg-slate-50 border-r border-slate-200 flex flex-col">
+        <div class="p-6 flex items-center gap-3">
+            <div class="bg-red-500 text-white p-2 rounded-lg">
+                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                    <path
+                        d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
+                </svg>
+            </div>
+            <h1 class="text-xl font-semibold text-slate-800 tracking-tight">Drive</h1>
+        </div>
+
+        <div class="px-4 pb-4">
+            <a href="/dashboard"
+                class="flex items-center gap-2 bg-white border border-slate-200 shadow-sm rounded-full py-3 px-4 font-medium text-slate-700 hover:bg-slate-50 transition-colors w-max">
+                <svg class="w-6 h-6 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+                </svg>
+                New Upload
+            </a>
+        </div>
+
+        <nav class="flex-1 px-3 space-y-1">
+            <a href="/"
+                class="flex items-center gap-3 px-3 py-2 text-slate-600 hover:bg-slate-100 rounded-lg font-medium transition-colors">
+                <svg class="w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+                Recent Uploads
+            </a>
+            <a href="/my-videos"
+                class="flex items-center gap-3 px-3 py-2 bg-blue-50 text-blue-700 rounded-lg font-medium">
+                <svg class="w-5 h-5 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6">
+                    </path>
+                </svg>
+                My Drive (YouTube)
+            </a>
+            <a href="/auth/youtube"
+                class="flex items-center gap-3 px-3 py-2 text-slate-600 hover:bg-slate-100 rounded-lg font-medium transition-colors">
+                <svg class="w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z">
+                    </path>
+                </svg>
+                Link Account
+            </a>
+        </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="flex-1 flex flex-col min-w-0 bg-white">
+        <!-- Header -->
+        <header class="h-16 border-b border-slate-200 flex items-center justify-between px-6">
+            <div class="flex-1 right-0">
+                <div class="max-w-xl relative">
+                    <span class="absolute inset-y-0 left-0 flex items-center pl-3">
+                        <svg class="w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                        </svg>
+                    </span>
+                    <input type="text" placeholder="Search videos in Drive"
+                        class="w-full bg-slate-100 border-transparent focus:bg-white focus:border-blue-500 focus:ring-1 focus:ring-blue-500 rounded-lg pl-10 pr-4 py-2.5 text-sm transition-colors">
+                </div>
+            </div>
+            {% if user %}
+            <div class="flex items-center gap-4">
+                <span class="text-sm font-medium text-slate-700 bg-slate-100 px-3 py-1.5 rounded-full">{{ user.name
+                    }}</span>
+            </div>
+            {% endif %}
+        </header>
+
+        <!-- Content Area -->
+        <div class="flex-1 p-6 overflow-y-auto w-full max-w-7xl mx-auto">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-lg font-medium text-slate-800">My Drive (YouTube)</h2>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
+                {% if videos %}
+                {% for video in videos %}
+                {% set snippet = video.snippet %}
+                {% set video_id = snippet.resourceId.videoId %}
+                {% set thumb_url = snippet.thumbnails.medium.url if snippet.thumbnails and snippet.thumbnails.medium
+                else '' %}
+                <div
+                    class="group border border-slate-200 rounded-xl overflow-hidden hover:shadow-md transition-shadow cursor-pointer bg-white flex flex-col">
+                    <div class="aspect-video bg-slate-100 flex items-center justify-center relative overflow-hidden">
+                        {% if thumb_url %}
+                        <img src="{{ thumb_url }}"
+                            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                            alt="Thumbnail">
+                        {% else %}
+                        <svg class="w-12 h-12 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                                d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z">
+                            </path>
+                        </svg>
+                        {% endif %}
+                    </div>
+
+                    <div class="p-3 bg-white flex-1 flex flex-col justify-between">
+                        <h3 class="font-medium text-sm text-slate-900 line-clamp-2 leading-tight"
+                            title="{{ snippet.title }}">{{ snippet.title }}</h3>
+                        <div class="flex items-center justify-between mt-3 text-xs text-slate-500">
+                            {% if video_id %}
+                            <div class="flex items-center gap-3">
+                                <a href="https://youtu.be/{{ video_id }}" target="_blank"
+                                    class="text-blue-600 hover:text-blue-800 hover:underline flex items-center gap-1 font-medium">
+                                    <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24">
+                                        <path
+                                            d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
+                                    </svg>
+                                    Watch
+                                </a>
+                                <a href="/download/{{ video_id }}"
+                                    class="text-slate-600 hover:text-slate-900 bg-slate-100 hover:bg-slate-200 px-2 py-1 flex items-center gap-1 rounded font-medium transition-colors"
+                                    title="Download">
+                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+                                    </svg>
+                                    Download
+                                </a>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+                {% else %}
+                <div
+                    class="col-span-full py-16 text-center border-2 border-dashed border-slate-200 rounded-2xl bg-white">
+                    <svg class="w-16 h-16 text-slate-300 mx-auto mb-4" fill="none" stroke="currentColor"
+                        viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                            d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 002-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10">
+                        </path>
+                    </svg>
+                    <h3 class="text-lg font-medium text-slate-900">No videos found on YouTube</h3>
+                    <p class="mt-1 text-slate-500">Go to New Upload to add a video.</p>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </main>
+</body>
+
+</html>
